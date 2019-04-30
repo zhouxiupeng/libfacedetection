@@ -1,3 +1,12 @@
+
+在ubuntu18下面编译，需要先安装openvc3.4以上版本，本人编译安装3.2版本出现了两个问题，按照网上
+资料修改源码后才可以正常编译，3.4的版本没有这个问题，可以直接编译成功。
+按照下面的链接，修改了添加了Makefile文件，这样可以在butuntu18下面直接编译测试。
+
+https://blog.csdn.net/mhsszm/article/details/88722680
+
+
+
 # libfacedetection
 
 This is an open source library for CNN-based face detection in images. The CNN model has been converted to static variables in C source files. The source code does not depend on any other libraries. What you need is just a C++ compiler. You can compile the source code under Windows, Linux, ARM and any platform with a C++ compiler.
