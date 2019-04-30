@@ -38,20 +38,23 @@ the use of this software, even if advised of the possibility of such damage.
 
 #include <stdio.h>
 #include <opencv2/opencv.hpp>
-#include "facedetectcnn.h"
+#include <facedetectcnn.h>
 
 //define the buffer size. Do not change the size!
+//#define DETECT_BUFFER_SIZE 0x20000
 #define DETECT_BUFFER_SIZE 0x20000
 using namespace cv;
 
 int main(int argc, char* argv[])
 {
+	printf("server is starting..,\n");
+	 printf("argc: %d \n", argc);
     if(argc != 2)
-    {
+    {//在bin目录下，运行./test …/images/20190314160527.jpg
         printf("Usage: %s <image_file_name>\n", argv[0]);
         return -1;
     }
-
+	printf("start read file\n");
 	//load an image and convert it to gray (single-channel)
 	Mat image = imread(argv[1]); 
 	if(image.empty())
@@ -60,6 +63,7 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 
+	printf("start mallco mem\n");
 	int * pResults = NULL; 
     //pBuffer is used in the detection functions.
     //If you call functions in multiple threads, please create one buffer for each thread!
@@ -77,7 +81,9 @@ int main(int argc, char* argv[])
 	//////////////////////////////////////////
 	//!!! The input image must be a BGR one (three-channel) instead of RGB
 	//!!! DO NOT RELEASE pResults !!!
+	printf("start run facedetect_cnn\n");
 	pResults = facedetect_cnn(pBuffer, (unsigned char*)(image.ptr(0)), image.cols, image.rows, (int)image.step);
+    printf("facedetect_cnn\n");
 
     printf("%d faces detected.\n", (pResults ? *pResults : 0));
 	Mat result_cnn = image.clone();

@@ -5,6 +5,7 @@
 
 https://blog.csdn.net/mhsszm/article/details/88722680
 
+ g++ libfacedetectcnn-example.cpp -o libfacedetectcnn-example -I/usr/local/include  -L/usr/local/lib -L/home/zxp/pro/libfacedetection/src -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_imgcodecs -fpermissive -lfacedetectcnn 
 
 
 # libfacedetection
