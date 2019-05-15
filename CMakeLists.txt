@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 2.8)
 option(ENABLE_INT8 "use int8" OFF)
 option(ENABLE_AVX2 "use avx2" OFF)
 option(ENABLE_NEON "whether use neon, if use arm please set it on" OFF)
-option(DEMO "build the demo" OFF)
+option(DEMO "build the demo" ON)
 
 SET(fdt_base_dir   ${PROJECT_SOURCE_DIR})
 SET(fdt_src_dir    ${fdt_base_dir}/src)
@@ -36,9 +36,13 @@ if(ENABLE_NEON)
 	add_definitions(-D_ENABLE_NEON)
 endif()
 
+
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+
 
 INCLUDE_DIRECTORIES(${fdt_inc_dir})
 

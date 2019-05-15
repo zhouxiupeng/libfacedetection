@@ -5,9 +5,19 @@
 
 https://blog.csdn.net/mhsszm/article/details/88722680
 
- g++ libfacedetectcnn-example.cpp -o libfacedetectcnn-example -I/usr/local/include  -L/usr/local/lib -L/home/zxp/pro/libfacedetection/src -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_imgcodecs -fpermissive -lfacedetectcnn 
+直接用cmake编译就可以了。
+mkdir build   cd build   cmake ..    make
+
+如果想优化，修改CMakeLists.txt中参数
+option(ENABLE_AVX2 "use avx2" OFF) ON
+编译测试程序，修改 
+option(DEMO "build the demo" ON)
+
+开启AVX2 需要检查本机的cpu是否支持，在linux下，执行命令 cat /proc/cpuinfo，检查是否支持AVX2，否则不能开启。
 
 
+vs2017配置
+https://blog.csdn.net/Snail_Z1/article/details/88654624
 # libfacedetection
 
 This is an open source library for CNN-based face detection in images. The CNN model has been converted to static variables in C source files. The source code does not depend on any other libraries. What you need is just a C++ compiler. You can compile the source code under Windows, Linux, ARM and any platform with a C++ compiler.
@@ -37,14 +47,18 @@ If you want to compile and run the example, you can create a build folder first,
 mkdir build; cd build; rm -rf *
 ```
 
+cmake     -DENABLE_INT8=ON     -DENABLE_AVX2=ON     -DCMAKE_BUILD_TYPE=RELEASE  -DDEMO=ON  ..
+
 ### Use Tengine to Speedup the detection on ARM
 The model has been added to [Tengine](https://github.com/OAID/Tengine). Tengine, developed by OPEN AI LAB, is a lite, high-performance, and modular inference engine for embedded device. 
 
 The model in Tengine can run faster than the C++ source code here because Tengine has been optimized according to ARM CPU. There are detailed manual and example at Tengine web site: https://github.com/OAID/Tengine/tree/master/examples/YuFaceDetectNet
 
-### Cross build for aarch64
+### Cross build for aarch64 手机段使用
 1. Set cross compiler for aarch64 (please refer to aarch64-toolchain.cmake)
 2. Set opencv path since the example code depends on opencv
+
+cmake    -DENABLE_INT8=ON     -DENABLE_NEON=ON -DCMAKE_BUILD_TYPE=RELEASE   -DCMAKE_TOOLCHAIN_FILE=../aarch64-toolchain.cmake
 
 ```
 cmake \
@@ -57,6 +71,8 @@ cmake \
 make
 ```
 
+
+cmake     -DENABLE_AVX2=ON    -DCMAKE_BUILD_TYPE=RELEASE    -DDEMO=ON 
 ### Native build for avx2
 ```
 cmake \
